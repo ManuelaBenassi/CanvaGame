@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <title>Animação</title>
+        <meta charset="UTF-8">
+        <script language="JavaScript" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="Iniciar();">
+        <canvas id="jogo" width="512" height="480" style="border:1px solid #000000;">
+                Seu browser não suporta o elemento CANVAS, atualize-se!!!
+        </canvas>
+        <div id="pontos">
+
+        </div>
+
+        </div>
+</body>
+<style>
+        #pontos {
+                position: absolute;
+                background-color: green;
+                margin-top: 70px;
+                margin-left: 630px;
+                width: 300px;
+                height: 50px;
+        }
+
+        #jogo {
+                padding-left: 0;
+                padding-right: 0;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 0;
+                margin: auto;
+                display: block;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+        }
+</style>
+<script>
+        //PORQUICE
+        let RUN_ONCE = true;
+        //FINAL PORQUICE
+        canvas = document.getElementById("jogo");
+        var objContexto = canvas.getContext("2d");        
+        var imgFundo = new Image();
+        imgFundo.src = "fundo.png";
+        posicaoHeroix = 30;
+        posicaoHeroiy = 20;
+        posicaoMonstrox = 60;
+        posicaoMonstroy = 400;
+        var heroi = new Image();
+        heroi.src = "heroi.png";
+        var monstro = new Image();
+        monstro.src = "monstro.png";
+        var coin = new Image();
+        coin.src = "coin.png";
+        const COIN_WIDTH = 25;
+        const COIN_HEIGHT = 25;
+        var posicaoxCoin = 100;                                
+        var posicaoyCoin = 50;
+        var varAtualizacao;
+        var FPS = 10;
+
+        function Iniciar() {
+                objContexto.drawImage(imgFundo, 0, 0);
+                objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
+                objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
+                objContexto.drawImage(coin,posicaoxCoin,posicaoyCoin, COIN_WIDTH, COIN_HEIGHT);
+                MovimentoMonstro();
+        }
+
+        function AtualizarTela() {
+                objContexto.drawImage(imgFundo, 0, 0);
+                objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
+                objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
+                objContexto.drawImage(coin,posicaoxCoin,posicaoyCoin);
+
+                if (varAtualizacao % 30 == 0) {
+                        posicaoxCoin = Math.floor(Math.random(512) * 100);
+                        posicaoyCoin = Math.floor(Math.random(480) * 100);
+                        objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
+                }
+                varAtualizacao ++;
+        }
+        var contagemAtualizacao;
+        $(document).on('keydown', function (e) {
+
+                if (e.which == 39) {
+                        posicaoHeroix += 7;
+                }
+                if (e.which == 37) {
+                        posicaoHeroix -= 7;
+                }
+                if (e.which == 38) {
+                        posicaoHeroiy -= 7;
+                }
+                if (e.which == 40) {
+                        posicaoHeroiy += 7;
+                }
+
+        })
+
+        function MovimentoMonstro() {
+
+                var tempo = setInterval(function () {
+
+                        // Verifica colisão entre Heroi e Monstro
+                        if (posicaoHeroix > posicaoMonstrox - 25 && posicaoHeroix < posicaoMonstrox +
+                                15 && posicaoHeroiy > posicaoMonstroy - 15 && posicaoHeroiy <
+                                posicaoMonstroy + 15) {
+                                GameOver();
+                        }
+
+                        if (posicaoHeroix > posicaoMonstrox) {
+                                posicaoMonstrox += 7;
+                        } else
+                                posicaoMonstrox -= 7;
+                        if (posicaoHeroiy > posicaoMonstroy) {
+                                posicaoMonstroy += 7;
+                        } else
+                                posicaoMonstroy -= 7;
+
+                }, 1000);
+        }
+
+
+        function GameOver() {
+                if (RUN_ONCE) {
+                        this.alert("ganho carai");
+                        RUN_ONCE = false;
+                }
+
+                // GAME OVER PLACEHOLDER
+        }
+
+        var atualizacao = setInterval( () => {
+                AtualizarTela();
+        }, 1/FPS);
+
+</script>
+
+</html>
