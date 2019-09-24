@@ -68,6 +68,7 @@
         var posicaoyCoin = 50;
         var varAtualizacao;
         var FPS = 10;
+        var pontuacao;
 
         function Iniciar() {
                 objContexto.drawImage(imgFundo, 0, 0);
@@ -82,13 +83,14 @@
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
                 objContexto.drawImage(coin,posicaoxCoin,posicaoyCoin);
-
-                if (varAtualizacao % 30 == 0) {
-                        posicaoxCoin = Math.floor(Math.random(512) * 100);
+            var ta = 
+                setTimeout(function() {
+                    posicaoxCoin = Math.floor(Math.random(512) * 100);
                         posicaoyCoin = Math.floor(Math.random(480) * 100);
                         objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-                }
-                varAtualizacao ++;
+    // Whatever you want to do after the wait
+}, 10000);          
+            Moeda();
         }
         var contagemAtualizacao;
         $(document).on('keydown', function (e) {
@@ -131,6 +133,19 @@
                 }, 1000);
         }
 
+        function Moeda()
+    {
+        if (posicaoHeroix > posicaoxCoin - 25 && posicaoHeroix < posicaoxCoin +
+                                15 && posicaoHeroiy > posicaoyCoin - 15 && posicaoHeroiy <
+                                posicaoyCoin + 15) {
+                                
+            posicaoyCoin = 10000;
+            posicaoxCoin = 10000;
+            pontuacao +=100;
+        }
+            
+        
+    }
 
         function GameOver() {
                 if (RUN_ONCE) {
@@ -143,6 +158,7 @@
 
         var atualizacao = setInterval( () => {
                 AtualizarTela();
+            
         }, 1/FPS);
 
 </script>
