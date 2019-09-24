@@ -23,10 +23,14 @@
         #pontos {
                 position: absolute;
                 background-color: green;
-                margin-top: 70px;
-                margin-left: 630px;
+                margin-top: 2%;
+                margin-left: 38%;
                 width: 300px;
                 height: 50px;
+                font-size: 30px;
+                text-align: center;
+                vertical-align: middle;
+                text-anchor: top;
         }
 
         #jogo {
@@ -49,7 +53,7 @@
         let RUN_ONCE = true;
         //FINAL PORQUICE
         canvas = document.getElementById("jogo");
-        var objContexto = canvas.getContext("2d");        
+        var objContexto = canvas.getContext("2d");
         var imgFundo = new Image();
         imgFundo.src = "fundo.png";
         posicaoHeroix = 30;
@@ -64,17 +68,17 @@
         coin.src = "coin.png";
         const COIN_WIDTH = 25;
         const COIN_HEIGHT = 25;
-        var posicaoxCoin = 100;                                
+        var posicaoxCoin = 100;
         var posicaoyCoin = 50;
         var varAtualizacao;
         var FPS = 10;
-        var pontuacao;
+        var pontuacao = 0;
 
         function Iniciar() {
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
-                objContexto.drawImage(coin,posicaoxCoin,posicaoyCoin, COIN_WIDTH, COIN_HEIGHT);
+                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin, COIN_WIDTH, COIN_HEIGHT);
                 MovimentoMonstro();
         }
 
@@ -82,15 +86,10 @@
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
-                objContexto.drawImage(coin,posicaoxCoin,posicaoyCoin);
-            var ta = 
-                setTimeout(function() {
-                    posicaoxCoin = Math.floor(Math.random(512) * 100);
-                        posicaoyCoin = Math.floor(Math.random(480) * 100);
-                        objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-    // Whatever you want to do after the wait
-}, 10000);          
-            Moeda();
+                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
+                $("#pontos").html('<h6>Pontos: </h6>' + pontuacao +"");
+
+                Moeda();
         }
         var contagemAtualizacao;
         $(document).on('keydown', function (e) {
@@ -133,34 +132,40 @@
                 }, 1000);
         }
 
-        function Moeda()
-    {
-        if (posicaoHeroix > posicaoxCoin - 25 && posicaoHeroix < posicaoxCoin +
-                                15 && posicaoHeroiy > posicaoyCoin - 15 && posicaoHeroiy <
-                                posicaoyCoin + 15) {
-                                
-            posicaoyCoin = 10000;
-            posicaoxCoin = 10000;
-            pontuacao +=100;
+        function Moeda() {
+                if (posicaoHeroix > posicaoxCoin - 25 && posicaoHeroix < posicaoxCoin +
+                        15 && posicaoHeroiy > posicaoyCoin - 15 && posicaoHeroiy <
+                        posicaoyCoin + 15) {
+
+                        posicaoyCoin = 10000;
+                        posicaoxCoin = 10000;
+                        pontuacao += 100;
+                }
+                var ta =
+                        setInterval(function () {
+
+                                posicaoxCoin = Math.floor(Math.random(512) * 100);
+                                posicaoyCoin = Math.floor(Math.random(480) * 100);
+                                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
+
+                        }, 10000);
+
+
         }
-            
-        
-    }
 
         function GameOver() {
                 if (RUN_ONCE) {
-                        this.alert("ganho carai");
+                        this.alert("ganho cara");
                         RUN_ONCE = false;
                 }
 
                 // GAME OVER PLACEHOLDER
         }
 
-        var atualizacao = setInterval( () => {
+        var atualizacao = setInterval(() => {
                 AtualizarTela();
-            
-        }, 1/FPS);
 
+        }, 1 / FPS);
 </script>
 
 </html>
