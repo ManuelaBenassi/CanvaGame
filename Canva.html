@@ -14,10 +14,11 @@
                 Seu browser não suporta o elemento CANVAS, atualize-se!!!
         </canvas>
         <div id="pontos">
-                
         </div>
-
-        </div>
+        <p id="primeiro">Como jogar?</p>
+        <p>Você deve caçar o monstro e pegar</p>
+        <p>a maior quantidade de moedas possível!</p>
+        <p>Se encostar em alguma árvore, perde.</p>
 </body>
 <style>
         #pontos {
@@ -47,8 +48,19 @@
                 left: 0;
                 right: 0;
         }
-        body{
+
+        body {
                 background-color: rgb(62, 128, 0);
+        }
+
+        p {
+                position: relative;
+                text-align: center;
+                
+        }
+        #primeiro
+        {
+                margin-top: 35%;
         }
 </style>
 <script>
@@ -81,7 +93,7 @@
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
-           
+
                 DesenhaMoeda();
                 MovimentoMonstro();
         }
@@ -91,9 +103,9 @@
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
                 objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-              //  objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-                $("#pontos").html('<h6>Pontos: '+ pontuacao +" </h6>'");
-                
+
+                $("#pontos").html('<h6>Pontos: ' + pontuacao + " </h6>'");
+
                 VerificaMoeda();
         }
         var contagemAtualizacao;
@@ -124,15 +136,27 @@
                                 posicaoMonstroy + 15) {
                                 GameOver();
                         }
+                        if (posicaoMonstrox < 35) {
+                                posicaoMonstrox  = Math.floor(Math.random() * (452 - 30) + 30);
+                        }
+                        if (posicaoMonstrox > 473) {
+                                posicaoMonstrox = Math.floor(Math.random() * (452 - 30) + 30);
+                        }
+                        if (posicaoMonstroy < 35) {
+                                posicaoMonstroy = Math.floor(Math.random() * (420 - 30) + 30);
+                        }
+                        if (posicaoMonstroy > 415) {
+                                posicaoMonstroy = Math.floor(Math.random() * (420 - 30) + 30);
+                        }
 
                         if (posicaoHeroix > posicaoMonstrox) {
-                                posicaoMonstrox += 7;
-                        } else
                                 posicaoMonstrox -= 7;
-                        if (posicaoHeroiy > posicaoMonstroy) {
-                                posicaoMonstroy += 7;
                         } else
+                                posicaoMonstrox += 7;
+                        if (posicaoHeroiy > posicaoMonstroy) {
                                 posicaoMonstroy -= 7;
+                        } else
+                                posicaoMonstroy += 7;
 
                 }, 1000);
         }
@@ -146,15 +170,29 @@
                         posicaoxCoin = 10000;
                         pontuacao += 100;
                         DesenhaMoeda();
-                } 
+                }
         }
 
-        function DesenhaMoeda()
-        {
+        function DesenhaMoeda() {
                 posicaoxCoin = Math.floor(Math.random() * (452 - 30) + 30);
-                
+
                 posicaoyCoin = Math.floor(Math.random() * (420 - 30) + 30);
                 objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
+        }
+
+        function VerificaSeArvore() {
+                if (posicaoHeroix < 35) {
+                        Perdeu();
+                }
+                if (posicaoHeroix > 473) {
+                        Perdeu();
+                }
+                if (posicaoHeroiy < 35) {
+                        Perdeu();
+                }
+                if (posicaoMonstroy > 415) {
+                        Perdeu();
+                }
         }
 
         function GameOver() {
