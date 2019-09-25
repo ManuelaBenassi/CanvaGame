@@ -69,15 +69,13 @@
         }
 </style>
 <script>
-        //PORQUICE
-        let RUN_ONCE = true;
-        //FINAL PORQUICE
+        
         canvas = document.getElementById("jogo");
         var objContexto = canvas.getContext("2d");
         var imgFundo = new Image();
         imgFundo.src = "fundo.png";
-        posicaoHeroix = 30;
-        posicaoHeroiy = 20;
+        posicaoHeroix = 40;
+        posicaoHeroiy = 40;
         posicaoMonstrox = 60;
         posicaoMonstroy = 400;
         var heroi = new Image();
@@ -86,13 +84,13 @@
         monstro.src = "monstro.png";
         var coin = new Image();
         coin.src = "coin.png";
-        const COIN_WIDTH = 25;
-        const COIN_HEIGHT = 25;
         var posicaoxCoin = 100;
         var posicaoyCoin = 50;
         var varAtualizacao;
-        var FPS = 10;
         var pontuacao = 0;
+        var ganhou = false;
+        var perdeu = false;
+        var FPS = 10;
 
         function Iniciar() {
                 objContexto.drawImage(imgFundo, 0, 0);
@@ -108,7 +106,7 @@
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
                 objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-
+                        
                 $("#pontos").html('<h6>Pontos: ' + pontuacao + " </h6>'");
 
                 VerificaMoeda();
@@ -139,7 +137,9 @@
                         if (posicaoHeroix > posicaoMonstrox - 25 && posicaoHeroix < posicaoMonstrox +
                                 15 && posicaoHeroiy > posicaoMonstroy - 15 && posicaoHeroiy <
                                 posicaoMonstroy + 15) {
-                                GameOver();
+                                
+                                alert("você ganhou com " + pontuacao + " pontos. Recarregue a página para jogar novamente!");
+                                
                         }
                         if (posicaoMonstrox < 35) {
                                 posicaoMonstrox  = Math.floor(Math.random() * (452 - 30) + 30);
@@ -187,27 +187,20 @@
 
         function VerificaSeArvore() {
                 if (posicaoHeroix < 35) {
-                        Perdeu();
+                        perdeu =true;
                 }
                 if (posicaoHeroix > 473) {
-                        Perdeu();
+                        perdeu =true;
                 }
                 if (posicaoHeroiy < 35) {
-                        Perdeu();
+                        perdeu =true;
                 }
                 if (posicaoMonstroy > 415) {
-                        Perdeu();
+                        perdeu =true;
                 }
         }
 
-        function GameOver() {
-                if (RUN_ONCE) {
-                        this.alert("ganho cara");
-                        RUN_ONCE = false;
-                }
-
-                // GAME OVER PLACEHOLDER
-        }
+        
 
 
         var atualizacao = setInterval(() => {
