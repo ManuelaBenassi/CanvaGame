@@ -14,15 +14,14 @@
                 Seu browser não suporta o elemento CANVAS, atualize-se!!!
         </canvas>
         <div id="pontos">
-
+                
         </div>
 
         </div>
 </body>
 <style>
         #pontos {
-                position: absolute;
-                background-color: green;
+                background-color: rgb(62, 128, 0);
                 margin-top: 2%;
                 margin-left: 38%;
                 width: 300px;
@@ -32,6 +31,7 @@
                 vertical-align: middle;
                 text-anchor: top;
         }
+
 
         #jogo {
                 padding-left: 0;
@@ -46,6 +46,9 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
+        }
+        body{
+                background-color: rgb(62, 128, 0);
         }
 </style>
 <script>
@@ -78,7 +81,8 @@
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
-                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin, COIN_WIDTH, COIN_HEIGHT);
+           
+                DesenhaMoeda();
                 MovimentoMonstro();
         }
 
@@ -87,9 +91,10 @@
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
                 objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-                $("#pontos").html('<h6>Pontos: </h6>' + pontuacao +"");
-
-                Moeda();
+              //  objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
+                $("#pontos").html('<h6>Pontos: '+ pontuacao +" </h6>'");
+                
+                VerificaMoeda();
         }
         var contagemAtualizacao;
         $(document).on('keydown', function (e) {
@@ -132,7 +137,7 @@
                 }, 1000);
         }
 
-        function Moeda() {
+        function VerificaMoeda() {
                 if (posicaoHeroix > posicaoxCoin - 25 && posicaoHeroix < posicaoxCoin +
                         15 && posicaoHeroiy > posicaoyCoin - 15 && posicaoHeroiy <
                         posicaoyCoin + 15) {
@@ -140,17 +145,16 @@
                         posicaoyCoin = 10000;
                         posicaoxCoin = 10000;
                         pontuacao += 100;
-                }
-                var ta =
-                        setInterval(function () {
+                        DesenhaMoeda();
+                } 
+        }
 
-                                posicaoxCoin = Math.floor(Math.random(512) * 100);
-                                posicaoyCoin = Math.floor(Math.random(480) * 100);
-                                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-
-                        }, 10000);
-
-
+        function DesenhaMoeda()
+        {
+                posicaoxCoin = Math.floor(Math.random() * (452 - 30) + 30);
+                
+                posicaoyCoin = Math.floor(Math.random() * (420 - 30) + 30);
+                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
         }
 
         function GameOver() {
@@ -161,6 +165,7 @@
 
                 // GAME OVER PLACEHOLDER
         }
+
 
         var atualizacao = setInterval(() => {
                 AtualizarTela();
