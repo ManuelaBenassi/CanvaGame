@@ -92,7 +92,7 @@
         var perdeu = false;
         var FPS = 10;
 
-        function Iniciar() {
+        function Iniciar() {//desenha canva  
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
@@ -101,12 +101,12 @@
                 MovimentoMonstro();
         }
 
-        function AtualizarTela() {
+        function AtualizarTela() {//movimentação dos personagens
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
                 objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);  
-                VerificaSeArvore();
+                VerificaSeArvore();//verifica se o heroi entrou em contato com as arvores
                 if(perdeu)
                 {
                         $("#pontos").html('<h6> Você perdeu:( Recarregue a página para jogar novamente</h6>');   
@@ -122,24 +122,24 @@
                 VerificaMoeda();
         }
         var contagemAtualizacao;
-        $(document).on('keydown', function (e) {
+        $(document).on('keydown', function (e) {//movimento baixo do teclado
 
-                if (e.which == 39) {
+                if (e.which == 39) {//anda pra direita
                         posicaoHeroix += 7;
                 }
-                if (e.which == 37) {
+                if (e.which == 37) {//anda pra esquerda
                         posicaoHeroix -= 7;
                 }
-                if (e.which == 38) {
+                if (e.which == 38) {//anda pra baixo
                         posicaoHeroiy -= 7;
                 }
-                if (e.which == 40) {
+                if (e.which == 40) {//anda pra cima
                         posicaoHeroiy += 7;
                 }
 
         })
 
-        function MovimentoMonstro() {
+        function MovimentoMonstro() {//verifica se eles entraram em contato ou orienta o monstro para fugir
 
                 var tempo = setInterval(function () {
 
@@ -176,7 +176,7 @@
                 }, 1000);
         }
 
-        function VerificaMoeda() {
+        function VerificaMoeda() {//verifica se o heroi pegou a moeda
                 if (posicaoHeroix > posicaoxCoin - 25 && posicaoHeroix < posicaoxCoin +
                         15 && posicaoHeroiy > posicaoyCoin - 15 && posicaoHeroiy <
                         posicaoyCoin + 15) {
@@ -188,14 +188,14 @@
                 }
         }
 
-        function DesenhaMoeda() {
+        function DesenhaMoeda() {//desenha a moeda em um lugar aleatorio
                 posicaoxCoin = Math.floor(Math.random() * (452 - 30) + 30);
 
                 posicaoyCoin = Math.floor(Math.random() * (420 - 30) + 30);
                 objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
         }
 
-        function VerificaSeArvore() {
+        function VerificaSeArvore() {//verifica se encostou na arvore 
                 if (posicaoHeroix < 25) {
                         perdeu =true;
                 }
@@ -213,7 +213,7 @@
         
 
 
-        var atualizacao = setInterval(() => {
+        var atualizacao = setInterval(() => {//atualiza a tela a cada milesimo de segundo para movimentação
                 AtualizarTela();
 
         }, 1 / FPS);
