@@ -24,9 +24,9 @@
 <style>
         #pontos {
                 background-color: rgb(62, 128, 0);
-                margin-top: 2%;
+                margin-top: 0;
                 margin-left: 38%;
-                width: 300px;
+                width: 350px;
                 height: 50px;
                 font-size: 30px;
                 text-align: center;
@@ -74,8 +74,8 @@
         var objContexto = canvas.getContext("2d");
         var imgFundo = new Image();
         imgFundo.src = "fundo.png";
-        posicaoHeroix = 40;
-        posicaoHeroiy = 40;
+        posicaoHeroix = 50;
+        posicaoHeroiy = 50;
         posicaoMonstrox = 60;
         posicaoMonstroy = 400;
         var heroi = new Image();
@@ -105,8 +105,18 @@
                 objContexto.drawImage(imgFundo, 0, 0);
                 objContexto.drawImage(heroi, posicaoHeroix, posicaoHeroiy);
                 objContexto.drawImage(monstro, posicaoMonstrox, posicaoMonstroy);
-                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);
-                        
+                objContexto.drawImage(coin, posicaoxCoin, posicaoyCoin);  
+                VerificaSeArvore();
+                if(perdeu)
+                {
+                        $("#pontos").html('<h6> Você perdeu:( Recarregue a página para jogar novamente</h6>');   
+                }
+                else
+                if(ganhou)
+                {
+                        $("#pontos").html('<h6> Você ganhou com ' + pontuacao + ' pontos :) Recarregue a página para jogar novamente</h6>');  
+                }
+                else
                 $("#pontos").html('<h6>Pontos: ' + pontuacao + " </h6>'");
 
                 VerificaMoeda();
@@ -138,7 +148,7 @@
                                 15 && posicaoHeroiy > posicaoMonstroy - 15 && posicaoHeroiy <
                                 posicaoMonstroy + 15) {
                                 
-                                alert("você ganhou com " + pontuacao + " pontos. Recarregue a página para jogar novamente!");
+                                ganhou = true;
                                 
                         }
                         if (posicaoMonstrox < 35) {
@@ -186,16 +196,16 @@
         }
 
         function VerificaSeArvore() {
-                if (posicaoHeroix < 35) {
+                if (posicaoHeroix < 25) {
                         perdeu =true;
                 }
-                if (posicaoHeroix > 473) {
+                if (posicaoHeroix > 465) {
                         perdeu =true;
                 }
-                if (posicaoHeroiy < 35) {
+                if (posicaoHeroiy < 25) {
                         perdeu =true;
                 }
-                if (posicaoMonstroy > 415) {
+                if (posicaoHeroiy > 405) {
                         perdeu =true;
                 }
         }
